@@ -1,6 +1,5 @@
 package com.kindle.util.testcases;
 
-import java.awt.AWTException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -8,10 +7,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import com.kindle.util.GenericKeywords;
+import com.kindle.util.WaitHandler;
 
 public class UnPublishKindle {
 	
-	public static void main(String[] args) throws InterruptedException, AWTException {
+	public static void main(String[] args) {
 		GenericKeywords app = null;
 		try{
 			app=new GenericKeywords();
@@ -29,13 +29,13 @@ public class UnPublishKindle {
 				
 				System.out.println(x.findElement(By.xpath("//div[@class='element-popover-text']/span")).getText());
 				if(x.findElement(By.xpath("//div[@class='element-popover-text']/span")).getText().contains("LIVE")){
-					Thread.sleep(2000);
+					WaitHandler.sleep(2);
 					System.out.println("Location  "+n);
 					Actions act=new Actions(app.getDriver());
 					act.moveToElement(list_humbergers.get(n)).build().perform();
-					Thread.sleep(5000);
+					WaitHandler.waitForElementClickable(app.getDriver(), By.xpath("//a[contains(text(),'Unpublish eBook')]"));
 					app.getDriver().findElement(By.xpath("//a[contains(text(),'Unpublish eBook')]")).click();
-					Thread.sleep(3000);			
+					WaitHandler.sleep(3);	
 					app.click("unpublish_button_xpath");;
 				}
 			}
